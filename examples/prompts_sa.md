@@ -1,7 +1,8 @@
 # SPL-Bench — Sanskrit prompts (copy-paste)
 
-All evaluation prompts are in simple Sanskrit. Do not translate to English at test time.
+All scored evaluation prompts/passages/answers are in simple Sanskrit. Do not translate to English at test time.
 Exception: `prayoga`-track items may contain documented Hindi/English/IAST spans by design.
+(Meta-docs — schema notes, judge settings, `explanation_sa` — may use Hindi/English.)
 
 ## MCQ / short answer
 

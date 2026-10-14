@@ -61,12 +61,21 @@ def build_prompt(item: dict) -> str:
 
 
 def load_gold(path, limit=None):
+    try:
+        fh = open(path, encoding="utf-8")
+    except FileNotFoundError:
+        print(f"ERROR: gold file not found: {path}", file=sys.stderr)
+        raise SystemExit(1)
     items = []
-    with open(path, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if line:
+    with fh:
+        for i, line in enumerate(fh, 1):
+            if not line.strip():
+                continue
+            try:
                 items.append(json.loads(line))
+            except json.JSONDecodeError as e:
+                print(f"ERROR: gold line {i}: invalid JSON: {e}", file=sys.stderr)
+                raise SystemExit(1)
     items.sort(key=lambda o: o.get("id", ""))
     if limit is None:
         return items

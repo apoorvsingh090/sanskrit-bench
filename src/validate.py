@@ -69,10 +69,17 @@ def validate_item(obj, lineno):
     if track in ("lekhana", "sara") and "rubric" not in obj:
         print(f"line {lineno}: {track} items require 'rubric'", file=sys.stderr)
         ok = False
-    if "rubric" in obj and not isinstance(obj["rubric"], dict):
-        print(f"line {lineno}: rubric must be an object", file=sys.stderr)
+    if "rubric" in obj:
+        if not isinstance(obj["rubric"], dict):
+            print(f"line {lineno}: rubric must be an object", file=sys.stderr)
+            ok = False
+        elif any(not isinstance(v, str) for v in obj["rubric"].values()):
+            print(f"line {lineno}: rubric values must be strings", file=sys.stderr)
+            ok = False
+    if track == "sara" and not obj.get("passage_sa"):
+        print(f"line {lineno}: sara items require 'passage_sa'", file=sys.stderr)
         ok = False
-    if track in ("pathana", "sara", "grounded") and not obj.get("passage_sa"):
+    elif track in ("pathana", "grounded") and not obj.get("passage_sa"):
         print(f"line {lineno}: warning: {track} usually needs passage_sa", file=sys.stderr)
     return ok
 
@@ -82,6 +89,9 @@ def main():
     ap.add_argument("--data", required=True, help="JSONL file to validate")
     args = ap.parse_args()
     path = Path(args.data)
+    if not path.is_file():
+        print(f"ERROR: file not found: {path}", file=sys.stderr)
+        return 1
     seen = set()
     ok_all = True
     n = 0

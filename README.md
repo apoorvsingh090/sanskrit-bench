@@ -2,10 +2,12 @@
 
 **Sanskrit reading + writing comprehension for AI models.**
 
-MIT-licensed, open, Sanskrit-first. Sister bench to
+MIT-licensed, open, Sanskrit-first for scored content (prompts, passages,
+answers). Sister bench to
 [HPL-Bench](https://github.com/apoorvsingh090/hpl-bench) (Hindi Pathan-Lekhan
 Bench) — same harness design, rebuilt for Sanskrit: sandhi, samasa, vibhakti,
-linga-vachana, lakara, kavya/shastra/vyavahara registers, lipyantara.
+linga-vachana, lakara, shastriya/vyavahara registers, lipyantara.
+(Meta-docs — schema notes, judge settings, explanations — may use Hindi/English.)
 
 SPL-Bench tests whether a model can **read simple Sanskrit gadya/katha and
 write correct Sanskrit** — from primary `A1` to shastriya `C1`.
@@ -16,10 +18,10 @@ write correct Sanskrit** — from primary `A1` to shastriya `C1`.
 |---|---|---|
 | `pathana` | gadya/katha comprehension (seed: short passages; target 150–800 words) | MCQ accuracy + short-answer F1 |
 | `anumana` | NLI, coref (`सा/तौ/ते`), subhashita-niti, muhavare (`अरण्यरोदनम्`, `कूपमण्डूकः`) | accuracy |
-| `vyakarana` | sandhi (रामायणम्), samasa (राजपुरुषः), vibhakti, linga-vachana, lakara, shabda-rupa | exact + token-F1 |
+| `vyakarana` | sandhi (रामायणम्), samasa (राजपुरुषः), vibhakti, linga-vachana, lakara (seed: 1 exemplar each; target: paradigms + prakriya) | exact + token-F1 |
 | `sara` | summarization, no hallucination (seed passages distinct from pathana) | LLM-judge + token-F1 informative |
 | `lekhana` | nibandha, patra, samvada, suchana | rubric 1–5 LLM-judge + human audit |
-| `prayoga` | shastriya/kavya/vyavahara, `त्वम्/भवान्`, IAST→Devanagari, vaidika (`गावः` vs `गाः`) | accuracy + style-appropriateness |
+| `prayoga` | shastriya/vyavahara styles, `त्वम्`-register, IAST→Devanagari, vaidika morphology (kavya: zero in seed, target) | accuracy + style-appropriateness |
 | `grounded` | 2-snippet toys in seed (target: multi-doc), cite `[अंश 1]`, abstain `सूचना उपलभ्या नास्ति` | accuracy + abstention rate; long-form via judge |
 
 Levels in seed v0.1.0: `A1:6 / A2:4 / B1:18 / B2:16 / C1:6`. Target adds kavya/shastra C1 + long-doc.
