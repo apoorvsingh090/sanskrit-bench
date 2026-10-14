@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SPL-Bench item",
+  "type": "object",
+  "required": ["id", "track", "level", "prompt_sa", "source", "version"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SPL-[A-Z]{2}-[0-9]{3}$",
+      "description": "Stable ID, e.g. SPL-PA-001"
+    },
+    "track": {
+      "type": "string",
+      "enum": ["pathana", "anumana", "vyakarana", "sara", "lekhana", "prayoga", "grounded"]
+    },
+    "level": {
+      "type": "string",
+      "enum": ["A1", "A2", "B1", "B2", "C1"]
+    },
+    "passage_sa": {
+      "type": "string",
+      "description": "Optional reading passage in Sanskrit (Devanagari). Required for pathana/sara/grounded."
+    },
+    "prompt_sa": {
+      "type": "string",
+      "description": "Instruction/question in simple Sanskrit. prayoga-track items may contain documented Hindi/English/IAST spans for robustness testing."
+    },
+    "choices": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 2,
+      "maxItems": 5,
+      "description": "For MCQ. Answer must exactly equal one choice."
+    },
+    "answer": {
+      "type": "string",
+      "description": "Reference answer in Sanskrit. For MCQ: the correct choice text."
+    },
+    "acceptable_answers": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Optional paraphrases accepted by exact-match scorer."
+    },
+    "rubric": {
+      "type": "object",
+      "description": "Required for lekhana/sara long-form. 1-5 criteria.",
+      "properties": {
+        "shuddhata": {"type": "string"},
+        "spashtata": {"type": "string"},
+        "sangathana": {"type": "string"},
+        "upayuktata": {"type": "string"}
+      },
+      "additionalProperties": {"type": "string"}
+    },
+    "explanation_sa": {
+      "type": "string",
+      "description": "Why the answer is correct (for dev transparency)."
+    },
+    "source": {"type": "string"},
+    "version": {"type": "string"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"track": {"const": "lekhana"}}},
+      "then": {"required": ["rubric"]}
+    },
+    {
+      "if": {"properties": {"track": {"const": "sara"}}},
+      "then": {"required": ["rubric", "passage_sa"]}
+    }
+  ]
+}

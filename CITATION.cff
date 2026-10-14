@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "SPL-Bench: Sanskrit Pathan-Lekhan Bench for Reading and Writing Comprehension"
+message: "If you use SPL-Bench, please cite it as below."
+type: software
+authors:
+  - family-names: "SPL-Bench contributors"
+license: MIT
+version: 0.1.0
+date-released: 2026-10-14
+repository-code: "https://github.com/apoorvsingh090/sanskrit-bench"
+keywords:
+  - sanskrit
+  - llm-evaluation
+  - reading-comprehension
+  - natural-language-generation
+  - indic-nlp

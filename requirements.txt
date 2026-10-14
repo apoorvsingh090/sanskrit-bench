@@ -1,0 +1,6 @@
+# SPL-Bench requirements
+# Core eval has zero hard dependencies (stdlib only).
+
+# Optional backends for src/run_local.py (core eval needs none of these).
+# transformers>=4.40; torch>=2.0  # --backend hf
+# (ollama, openai-compat and HF-API backends use stdlib urllib only)
